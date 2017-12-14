@@ -95,3 +95,9 @@
       (user-mail-address      . "henrik@lissner.net")
       (mu4e-compose-signature . "---\nHenrik Lissner"))
     t))
+
+
+;;; private/{user-login-name}/config.el
+(set! :company-backend 'python-mode '(company-anaconda))
+;; multiple modes at once
+(set! :company-backend '(css-mode scss-mode) '(company-css company-yasnippet))

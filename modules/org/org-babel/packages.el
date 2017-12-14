@@ -8,3 +8,4 @@
 (package! ob-rust :recipe (:fetcher github :repo "zweifisch/ob-rust"))
 (package! ob-sql-mode)
 (package! ob-translate)
+(package! ob-ipython)

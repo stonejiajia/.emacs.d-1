@@ -1,4 +1,8 @@
 ;;; org/org-babel/config.el -*- lexical-binding: t; -*-
+;;;
+
+;(load! +scimax-org-babel-ipython)
+
 
 (add-hook 'org-load-hook #'+org-babel|init t)
 
@@ -16,6 +20,7 @@
              css
              emacs-lisp
              haskell
+             ipython
              js
              latex
              ledger
@@ -28,6 +33,7 @@
              ruby
              rust       ; ob-rust
              shell
+             sml
              sqlite
              sql-mode   ; ob-sql-mode
              translate  ; ob-translate
@@ -50,3 +56,36 @@
     (when header-line-format
       (setq header-line-format nil)))
   (add-hook 'org-src-mode-hook #'+org|src-mode-remove-header))
+
+
+
+
+
+(setq org-confirm-babel-evaluate nil)   ;don't prompt me to confirm everytime I want to evaluate a block
+
+;;; display/update images in the buffer after I evaluate
+(add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
+
+;; Some use keybindings for org-src-block
+(eval-after-load 'org
+  '(progn
+     (add-to-list 'org-structure-template-alist
+                  '("ip" "#+BEGIN_SRC ipython :session :exports both :results raw drawer \n?\n#+END_SRC"
+                    "<src lang=\"python\">\n?\n</src>"))
+
+     (add-to-list 'org-structure-template-alist
+	              '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"
+	                "<src lang=\"emacs-lisp\">\n?\n</src>"))
+
+     (add-to-list 'org-structure-template-alist
+                  '("rr" "#+BEGIN_SRC R :exports both :results graphics :file ./fig_1?.png\n\n#+END_SRC"
+                    "<src lang=\"?\">\n\n</src>"))
+
+     (add-to-list 'org-structure-template-alist
+                  '("ipf" "#+BEGIN_SRC ipython :session :file ./figure/fig_1?.png :exports both :results raw \n\n#+END_SRC"
+                    "<src lang=\"?\">\n\n</src>"))
+
+     (add-to-list 'org-structure-template-alist
+                  '("sr" "#+BEGIN_SRC R :exports both :session \n\n#+END_SRC"
+                    "<src lang=\"?\">\n\n</src>"))
+     ))
